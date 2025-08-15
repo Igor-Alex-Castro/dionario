@@ -1,0 +1,47 @@
+package com.dionariao.controller;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.dionariao.dto.AddPalavraDto;
+import com.dionariao.model.Palavra;
+import com.dionariao.model.Significado;
+import com.dionariao.service.PalavaService;
+import com.dionariao.service.SignificadoService;
+
+@RestController
+@RequestMapping("/significado")
+public class SignificadoController {
+
+	
+	private final SignificadoService significadoService;
+
+	public SignificadoController(SignificadoService significadoService) {
+		
+		this.significadoService = significadoService;
+	}
+	
+	
+	@PostMapping
+	public ResponseEntity<Significado> addSignificado(@RequestParam String descricao, @RequestParam Long palavra){
+		
+		Significado significado = null;
+		try {
+			significado  = significadoService.addSignificado(descricao, palavra);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return ResponseEntity.ok(significado);
+	}
+	
+
+	
+	
+}

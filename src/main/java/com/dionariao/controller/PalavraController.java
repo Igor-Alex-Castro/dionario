@@ -1,6 +1,7 @@
 package com.dionariao.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dionariao.dto.AddPalavraDto;
 import com.dionariao.model.Palavra;
 import com.dionariao.service.PalavaService;
+import com.dionariao.service.impl.PalavraServiceImpl;
 
 @RestController
 @RequestMapping("/palavra")
@@ -53,5 +55,11 @@ public class PalavraController {
 		return ResponseEntity.ok(palavra);
 	}
 	
-	
+	@DeleteMapping("{id}")
+	public ResponseEntity<String> deletePalavra(@RequestParam Long idPalavra){
+		
+		palavaService.deleteById(idPalavra);
+		
+		return ResponseEntity.ok( "delete" );
+	}
 }

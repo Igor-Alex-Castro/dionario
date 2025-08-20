@@ -1,6 +1,7 @@
 package com.dionariao.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,6 +46,12 @@ public class OrigemController {
 	}
 	
 
-	
+	@DeleteMapping("{id}")
+	public ResponseEntity<String> deleteOrigem(@RequestParam Long idOrigem){
+		
+		origemService.deleteOrigem(idOrigem);
+		
+		return ResponseEntity.ok( "delete" );
+	}
 	
 }

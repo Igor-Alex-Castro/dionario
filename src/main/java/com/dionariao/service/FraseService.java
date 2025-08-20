@@ -7,5 +7,8 @@ public interface FraseService {
 	
 	
 	Frase addFrase(String descricao, Long Palavra);
+
 	
+	
+	void deleteById(Long idFrase);
 }

@@ -4,25 +4,28 @@ package com.dionariao.service.impl;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dionariao.dto.AddOrigemDto;
-import com.dionariao.dto.AddPalavraDto;
 import com.dionariao.model.Origem;
 import com.dionariao.model.Palavra;
-import com.dionariao.model.Significado;
+
 import com.dionariao.repository.OrigiemRepotitory;
 import com.dionariao.repository.PalavraRepository;
-import com.dionariao.repository.SignificadoRepotitory;
+
 import com.dionariao.service.OrigemService;
-import com.dionariao.service.SignificadoService;
+
 
 
 @Service
 public class OrigemServiceImpl implements OrigemService {
 
-	private final OrigiemRepotitory origemRepotitory;
-	private final PalavraRepository palavraRepository;
+	@Autowired
+	private  OrigiemRepotitory origemRepotitory;
+	
+	@Autowired
+	private  PalavraRepository palavraRepository;
 	
 	public OrigemServiceImpl(OrigiemRepotitory origemRepotitory, PalavraRepository palavraRepository) {
 		
@@ -45,10 +48,35 @@ public class OrigemServiceImpl implements OrigemService {
 		origem.setTitulo(addOrigemDto.titulo());
 		origem.setPag(addOrigemDto.pag());
 		
-		origem.setPalavra(palavraRetorn.get());
+		palavraRetorn.get().setOrigem(origem);
+		
 		origemRepotitory.save(origem);
 		
+		if(!palavraRetorn.isEmpty()) {
+			palavraRepository.save(palavraRetorn.get());
+		}
+		
 		return origem;
+	}
+
+
+
+
+	@Override
+	public void deleteOrigem(Long idOrigem) {
+		// TODO Auto-generated method stub
+		
+		
+		//Optional<Origem> origem  = origemRepotitory.findById(idOrigem);
+		Optional<Palavra> palavra = palavraRepository.findByOrigemId(idOrigem);
+		
+		palavra.get().setOrigem(null);
+		
+		//Origem origem = palavra.get().getOrigem();
+		
+		palavraRepository.save(palavra.get());
+		
+		origemRepotitory.deleteById(idOrigem);
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.dionariao.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,6 +43,17 @@ public class FraseController {
 		
 		return ResponseEntity.ok( frase );
 	}
+	
+	@DeleteMapping("{id}")
+	public ResponseEntity<String> deleteFrase(@RequestParam Long idFrase){
+		
+		
+		fraseService.deleteById(idFrase);
+		return ResponseEntity.ok("Dicionario excluido com sucesso");
+	
+		
+	}
+	
 	
 
 	

@@ -12,4 +12,8 @@ public interface PalavaService {
 	List<Palavra> findAllPalavrasByDicionario(Long idDionario);
 	
 	Palavra findByIdAndDicionarioId(Long idPalavra, Long idDicionario) throws Exception;
+
+	void deleteById(Long idPalavra);
+
+	
 }

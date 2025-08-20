@@ -18,7 +18,7 @@ public abstract class baseDescricao {
 	
 	private String descricao;
 	
-	@ManyToOne
+	 @ManyToOne
 	@JoinColumn(name = "palavra_id")
 	@JsonBackReference
 	private Palavra palavra;

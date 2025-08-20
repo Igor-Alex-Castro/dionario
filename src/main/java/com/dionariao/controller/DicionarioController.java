@@ -3,6 +3,7 @@ package com.dionariao.controller;
 
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,5 +42,13 @@ public class DicionarioController {
 		
 		Dicionario dicionario = dicionarioService.findByName(nomeDicionario);
 		return ResponseEntity.ok( dicionario);
+	}
+	
+	@DeleteMapping("/{id}")
+	
+	public ResponseEntity<String> deleteById(@RequestParam Long idDicionario) throws Exception{
+		
+		dicionarioService.deleteById(idDicionario);
+		return ResponseEntity.ok("Dicionario excluido com sucesso");
 	}
 }

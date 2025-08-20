@@ -11,4 +11,6 @@ public interface DicionarioService {
 	Dicionario saveNomeDicionario(SaveDicionarioDto saveDicionarioDto);
 	
 	Dicionario findByName( String nome) throws Exception;
+
+	void deleteById(Long idDicionario);
 }

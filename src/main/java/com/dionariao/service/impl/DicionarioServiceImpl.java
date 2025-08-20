@@ -45,5 +45,11 @@ public class DicionarioServiceImpl implements DicionarioService {
 		return dionario;
 	}
 
+	@Override
+	public void deleteById(Long idDicionario) {
+		// TODO Auto-generated method stub
+		 dicionarioRepository.deleteById(idDicionario);
+	}
+
 	
 }

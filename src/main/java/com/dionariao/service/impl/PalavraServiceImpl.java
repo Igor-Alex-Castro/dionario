@@ -11,6 +11,8 @@ import com.dionariao.repository.DicionarioRepository;
 import com.dionariao.repository.PalavraRepository;
 import com.dionariao.service.PalavaService;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class PalavraServiceImpl implements PalavaService {
 
@@ -57,6 +59,14 @@ public class PalavraServiceImpl implements PalavaService {
 			 .orElseThrow(() -> new Exception("Palavra não encontrada"));
 		
 			 return  palavra;
+	}
+
+
+	@Override
+	@Transactional
+	public void deleteById(Long idPalavra) {
+		// TODO Auto-generated method stub
+		palavraRepository.deleteById(idPalavra);
 	}
 
 }

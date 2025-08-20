@@ -33,15 +33,16 @@ public class Palavra {
 	
 
 
-	@OneToMany( mappedBy = "palavra", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany( mappedBy = "palavra", fetch = FetchType.EAGER, orphanRemoval = true)
 	@JsonManagedReference
 	private List<Significado> significados;
 
-	@OneToOne( cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "origem_id")
+	@OneToOne( fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "origem_id", referencedColumnName = "id")
+	@JsonManagedReference
 	private Origem origem;
 
-	@OneToMany(mappedBy = "palavra", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "palavra",  fetch = FetchType.EAGER, orphanRemoval = true)
 	private List<Frase> frases;
 
 	

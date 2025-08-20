@@ -15,4 +15,6 @@ public interface PalavraRepository extends JpaRepository<Palavra, Long>{
 	List<Palavra> findByDicionarioId(Long idDicionario);
 	
 	Optional<Palavra> findByIdAndDicionarioId(Long idPalavra, Long idDicionario);
+	
+	Optional<Palavra> findByOrigemId(Long idOrigem);
 }

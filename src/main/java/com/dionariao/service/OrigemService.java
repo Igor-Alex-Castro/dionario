@@ -9,5 +9,7 @@ public interface OrigemService {
 	
 
 	Origem addOrigem(AddOrigemDto addOrigemDto);
+
+	void deleteOrigem(Long idOrigem);
 	
 }

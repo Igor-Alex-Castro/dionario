@@ -44,4 +44,14 @@ public class SiginificadoServiceImpl implements SignificadoService {
 		return signficado;
 	}
 
+
+	@Override
+	public void deleteSignificado(Long idSignificado) {
+		// TODO Auto-generated method stub
+		significadoRepotitory.deleteById(idSignificado);
+	}
+
+
+	
+
 }

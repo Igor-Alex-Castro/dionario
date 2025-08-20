@@ -1,6 +1,7 @@
 package com.dionariao.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,6 +43,12 @@ public class SignificadoController {
 	}
 	
 
-	
+	@DeleteMapping("{id}")
+	public ResponseEntity<String> deleteSignificado(@RequestParam Long idSignificado){
+		
+		significadoService.deleteSignificado(idSignificado);
+		
+		return ResponseEntity.ok( "delete" );
+	}
 	
 }

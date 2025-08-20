@@ -22,7 +22,7 @@ public class Dicionario {
 	private String nome;
 	
 	
-	@OneToMany( mappedBy = "dicionario", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany( mappedBy = "dicionario",  fetch = FetchType.EAGER)
 	@JsonManagedReference
 	private List<Palavra> palavras;
 

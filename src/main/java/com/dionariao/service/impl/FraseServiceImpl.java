@@ -48,6 +48,15 @@ public class FraseServiceImpl implements FraseService {
 	}
 
 
+	@Override
+	public void deleteById(Long idFrase) {
+		// TODO Auto-generated method stub
+		
+		fraseRepotitory.deleteById(idFrase);
+		
+	}
+
+
 	
 
 }

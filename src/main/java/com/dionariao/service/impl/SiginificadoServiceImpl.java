@@ -48,6 +48,9 @@ public class SiginificadoServiceImpl implements SignificadoService {
 	@Override
 	public void deleteSignificado(Long idSignificado) {
 		// TODO Auto-generated method stub
+		Optional<Palavra> palavra = palavraRepository.findByOrigemId(idSignificado);
+		
+		
 		significadoRepotitory.deleteById(idSignificado);
 	}
 

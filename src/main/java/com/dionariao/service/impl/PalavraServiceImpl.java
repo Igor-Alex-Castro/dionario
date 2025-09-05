@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.dionariao.dto.AddPalavraDto;
 import com.dionariao.model.Dicionario;
 import com.dionariao.model.Palavra;
 import com.dionariao.repository.DicionarioRepository;
@@ -26,21 +27,25 @@ public class PalavraServiceImpl implements PalavaService {
 
 
 	@Override
-	public Palavra addPalavra(String nome, Long idDionario) throws Exception {
+	public Palavra addPalavra(AddPalavraDto addPalavraDto)  {
 		
 		
 	
 		Palavra palavra = new Palavra();
 		Dicionario dicionario = new Dicionario();
 		
-		dicionario.setId(idDionario);
+		dicionario.setId(addPalavraDto.idDicionario());
 		
 		palavra.setDicionario(dicionario);
 		
-		palavra.setNome(nome);
+		palavra.setNome(addPalavraDto.palavara());
+		
+		if(addPalavraDto.idPalavra() != null) {
+			palavra.setId(addPalavraDto.idPalavra());
+		}
 		palavraRepository.save(palavra);
 		
-		return null;
+		return palavra;
 	}
 
 
@@ -52,13 +57,24 @@ public class PalavraServiceImpl implements PalavaService {
 
 
 	@Override
-	public Palavra findByIdAndDicionarioId(Long idPalavra, Long idDicionario) throws Exception {
+	public Palavra findByIdAndDicionarioId(Long idPalavra, Long idDicionario)  {
 		
 		
-		Palavra  palavra = palavraRepository.findByIdAndDicionarioId(idPalavra, idDicionario)
-			 .orElseThrow(() -> new Exception("Palavra não encontrada"));
+		Palavra palavra = null;
+		try {
+			palavra = palavraRepository.findByIdAndDicionarioId(idPalavra, idDicionario)
+				 .orElseThrow(() -> new Exception("Palavra não encontrada"));
 		
-			 return  palavra;
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return palavra;
+		
+		
+			 
 	}
 
 

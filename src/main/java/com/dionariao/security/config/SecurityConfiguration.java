@@ -37,16 +37,22 @@ public class SecurityConfiguration {
             "/swagger-ui/**",
             "/v3/api-docs/**",
             "/swagger-resources/**",
-            "/webjars/**"
-	};
-	
-	public static final String [] ENDPOINTS_WITH_AUTHENTICATION_REQUIRED = {
-			"/users/test",
+            "/webjars/**",
+        	"/users/test",
 			"/dio/**",
 			"/frase/**",
 			"/origem/**",
 			"/palavra/**",
 			"/significado/**"
+	};
+	
+	public static final String [] ENDPOINTS_WITH_AUTHENTICATION_REQUIRED = {
+//			"/users/test",
+//			"/dio/**",
+//			"/frase/**",
+//			"/origem/**",
+//			"/palavra/**",
+//			"/significado/**"
 	};
 	
 	public static final String [] ENDPOINTS_CUSTOMER = {

@@ -2,16 +2,17 @@ package com.dionariao.service;
 
 import java.util.List;
 
+import com.dionariao.dto.AddPalavraDto;
 import com.dionariao.model.Palavra;
 
 public interface PalavaService {
 
 	
-	Palavra addPalavra(String nome, Long idDionario) throws Exception;
+	Palavra addPalavra(AddPalavraDto addPalavraDto) ;
 	
 	List<Palavra> findAllPalavrasByDicionario(Long idDionario);
 	
-	Palavra findByIdAndDicionarioId(Long idPalavra, Long idDicionario) throws Exception;
+	Palavra findByIdAndDicionarioId(Long idPalavra, Long idDicionario);
 
 	void deleteById(Long idPalavra);
 

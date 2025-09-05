@@ -32,12 +32,9 @@ public class SignificadoController {
 	public ResponseEntity<Significado> addSignificado(@RequestParam String descricao, @RequestParam Long palavra){
 		
 		Significado significado = null;
-		try {
-			significado  = significadoService.addSignificado(descricao, palavra);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		significado  = significadoService.addSignificado(descricao, palavra);
+		
 		
 		return ResponseEntity.ok(significado);
 	}

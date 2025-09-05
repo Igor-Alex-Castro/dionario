@@ -2,15 +2,20 @@ package com.dionariao.controller;
 
 
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dionariao.dto.IdNomeDioDto;
 import com.dionariao.dto.SaveDicionarioDto;
 import com.dionariao.model.Dicionario;
 import com.dionariao.service.DicionarioService;
@@ -29,26 +34,37 @@ public class DicionarioController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Dicionario> create(@RequestBody SaveDicionarioDto saveDicionarioDto){
+	public ResponseEntity<String> create(@RequestBody SaveDicionarioDto saveDicionarioDto){
 		
 		 Dicionario dicionarioCriado = dicionarioService.saveNomeDicionario(saveDicionarioDto);
 
-		return ResponseEntity.ok( dicionarioCriado);
+		return ResponseEntity.ok( dicionarioCriado.getNome());
 	}
 	
-	@GetMapping("/{nome}")
+
 	
-	public ResponseEntity<Dicionario> findByName(@RequestParam String nomeDicionario) throws Exception{
+	@GetMapping("/lista")
+	public ResponseEntity<List<IdNomeDioDto>> list(){
+
+		List<IdNomeDioDto> listIdNomeDioDto = dicionarioService.listaTodosDicionario();
+
+		 //return ResponseEntity.ok( dicionarioCriado);
+		 return ResponseEntity.ok( listIdNomeDioDto);
+	}
+	
+	@GetMapping
+	public ResponseEntity<String> findByName(@RequestParam String nomeDicionario) throws Exception{
 		
 		Dicionario dicionario = dicionarioService.findByName(nomeDicionario);
-		return ResponseEntity.ok( dicionario);
+		return ResponseEntity.ok( dicionario.getNome());
 	}
 	
-	@DeleteMapping("/{id}")
 	
+	
+	@DeleteMapping()
 	public ResponseEntity<String> deleteById(@RequestParam Long idDicionario) throws Exception{
 		
-		dicionarioService.deleteById(idDicionario);
-		return ResponseEntity.ok("Dicionario excluido com sucesso");
+		Optional<Dicionario> dicionario =  dicionarioService.deleteById(idDicionario);
+		return ResponseEntity.ok("Dicionario " +  dicionario.get().getNome() + "  excluido com sucesso");
 	}
 }

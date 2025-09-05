@@ -28,34 +28,34 @@ public class PalavraController {
 	
 	
 	@PostMapping
-	public ResponseEntity<Palavra> addPalavra(@RequestBody AddPalavraDto addPalavraDto){
+	public ResponseEntity<String> addPalavra(@RequestBody AddPalavraDto addPalavraDto){
 		
 		Palavra palavra = null;
 		try {
-			palavra = palavaService.addPalavra(addPalavraDto.palavara(), addPalavraDto.idDicionario());
+			palavra = palavaService.addPalavra(addPalavraDto);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		return ResponseEntity.ok(palavra);
+		return ResponseEntity.ok(palavra.getNome());
 	}
+	
+	
+	
 	
 	@GetMapping()
 	public ResponseEntity<Palavra> findByIdAndDicionarioId(@RequestParam Long idPalavra, @RequestParam Long idDicionario){
 		
 		Palavra palavra = null;
-		try {
+	
 			palavra = palavaService.findByIdAndDicionarioId(idPalavra, idDicionario);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	
 		
 		return ResponseEntity.ok(palavra);
 	}
 	
-	@DeleteMapping("{id}")
+	@DeleteMapping()
 	public ResponseEntity<String> deletePalavra(@RequestParam Long idPalavra){
 		
 		palavaService.deleteById(idPalavra);

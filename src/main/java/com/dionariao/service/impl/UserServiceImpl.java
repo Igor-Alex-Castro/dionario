@@ -90,6 +90,7 @@ public class UserServiceImpl implements UserService {
 
         // Salva o novo usuário no banco de dados
         userRepository.save(newUser);
+        
 		
 		
 	}

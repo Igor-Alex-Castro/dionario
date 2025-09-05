@@ -19,7 +19,7 @@ import com.dionariao.service.PalavaService;
 import com.dionariao.service.SignificadoService;
 
 @RestController
-@RequestMapping("/Origem")
+@RequestMapping("/origem")
 public class OrigemController {
 
 	

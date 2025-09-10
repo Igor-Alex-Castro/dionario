@@ -31,12 +31,10 @@ public class PalavraController {
 	public ResponseEntity<String> addPalavra(@RequestBody AddPalavraDto addPalavraDto){
 		
 		Palavra palavra = null;
-		try {
-			palavra = palavaService.addPalavra(addPalavraDto);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		
+		palavra = palavaService.addPalavra(addPalavraDto);
+	
 		
 		return ResponseEntity.ok(palavra.getNome());
 	}
@@ -47,19 +45,19 @@ public class PalavraController {
 	@GetMapping()
 	public ResponseEntity<Palavra> findByIdAndDicionarioId(@RequestParam Long idPalavra, @RequestParam Long idDicionario){
 		
-		Palavra palavra = null;
+			Palavra palavra = null;
 	
 			palavra = palavaService.findByIdAndDicionarioId(idPalavra, idDicionario);
 	
 		
-		return ResponseEntity.ok(palavra);
+			return ResponseEntity.ok(palavra);
 	}
 	
 	@DeleteMapping()
 	public ResponseEntity<String> deletePalavra(@RequestParam Long idPalavra){
 		
-		palavaService.deleteById(idPalavra);
+		Palavra palavra = palavaService.deleteById(idPalavra);
 		
-		return ResponseEntity.ok( "delete" );
+		return ResponseEntity.ok( "A Palavra " + palavra.getNome() + " foi deletada com sucesso" );
 	}
 }

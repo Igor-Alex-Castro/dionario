@@ -31,7 +31,7 @@ public class SiginificadoServiceImpl implements SignificadoService {
 		
 		
 		Significado signficado = new Significado();
-		 Optional<Palavra> palavraRetorn = palavraRepository.findById(palavra);
+		Optional<Palavra> palavraRetorn = palavraRepository.findById(palavra);
 				
 		
 		signficado.setPalavra(palavraRetorn.get());

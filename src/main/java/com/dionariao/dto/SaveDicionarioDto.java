@@ -1,3 +1,11 @@
 package com.dionariao.dto;
 
-public record SaveDicionarioDto (String name, Long id) {}
+import jakarta.validation.constraints.NotBlank;
+
+public record SaveDicionarioDto (
+		@NotBlank
+		String name, 
+		
+		Long id
+		
+		) {}

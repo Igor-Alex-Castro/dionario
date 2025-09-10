@@ -40,12 +40,12 @@ public class SignificadoController {
 	}
 	
 
-	@DeleteMapping("{id}")
+	@DeleteMapping
 	public ResponseEntity<String> deleteSignificado(@RequestParam Long idSignificado){
 		
 		significadoService.deleteSignificado(idSignificado);
 		
-		return ResponseEntity.ok( "delete" );
+		return ResponseEntity.ok("Significado excluido");
 	}
 	
 }

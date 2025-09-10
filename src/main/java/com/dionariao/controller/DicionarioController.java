@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,9 +20,14 @@ import com.dionariao.dto.SaveDicionarioDto;
 import com.dionariao.model.Dicionario;
 import com.dionariao.service.DicionarioService;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+
+
 
 @RestController
 @RequestMapping("/dio")
+@Validated
 public class DicionarioController {
 
 	private final DicionarioService dicionarioService;
@@ -34,7 +39,7 @@ public class DicionarioController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<String> create(@RequestBody SaveDicionarioDto saveDicionarioDto){
+	public ResponseEntity<String> create(@RequestBody @Valid SaveDicionarioDto saveDicionarioDto){
 		
 		 Dicionario dicionarioCriado = dicionarioService.saveNomeDicionario(saveDicionarioDto);
 
@@ -53,10 +58,10 @@ public class DicionarioController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<String> findByName(@RequestParam String nomeDicionario) throws Exception{
+	public ResponseEntity<Dicionario> findByName(@RequestParam @NotBlank(message = "O parâmetro 'nome' não pode ser vazio") String nome) throws Exception{
 		
-		Dicionario dicionario = dicionarioService.findByName(nomeDicionario);
-		return ResponseEntity.ok( dicionario.getNome());
+		Dicionario dicionario = dicionarioService.findByName(nome);
+		return ResponseEntity.ok( dicionario);
 	}
 	
 	

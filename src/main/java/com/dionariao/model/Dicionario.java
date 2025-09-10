@@ -20,7 +20,7 @@ public class Dicionario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "nome", unique = true) 
+	@Column(nullable = false, name = "nome", unique = true) 
 	private String nome;
 	
 	

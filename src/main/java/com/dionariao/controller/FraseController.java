@@ -44,12 +44,12 @@ public class FraseController {
 		return ResponseEntity.ok( frase );
 	}
 	
-	@DeleteMapping("{id}")
+	@DeleteMapping
 	public ResponseEntity<String> deleteFrase(@RequestParam Long idFrase){
 		
 		
 		fraseService.deleteById(idFrase);
-		return ResponseEntity.ok("Dicionario excluido com sucesso");
+		return ResponseEntity.ok("Frese excluida");
 	
 		
 	}

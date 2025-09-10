@@ -77,12 +77,20 @@ public class PalavraServiceImpl implements PalavaService {
 			 
 	}
 
+	public Palavra findPalavra(Long idPalavra) {
+		Optional<Palavra> palavra = palavraRepository.findById(idPalavra);
+		
+		return palavra.get();
+	}
 
 	@Override
 	@Transactional
-	public void deleteById(Long idPalavra) {
+	public Palavra deleteById(Long idPalavra) {
 		// TODO Auto-generated method stub
+		Palavra palavra = findPalavra(idPalavra);
 		palavraRepository.deleteById(idPalavra);
+		
+		return palavra;
 	}
 
 }

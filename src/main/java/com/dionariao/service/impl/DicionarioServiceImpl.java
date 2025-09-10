@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import com.dionariao.dto.IdNomeDioDto;
 import com.dionariao.dto.SaveDicionarioDto;
+import com.dionariao.exception.DicionarioNaoEncontradoException;
+import com.dionariao.exception.ResourceNotFoundException;
 import com.dionariao.model.Dicionario;
 import com.dionariao.model.Palavra;
 import com.dionariao.repository.DicionarioRepository;
@@ -57,7 +59,7 @@ public class DicionarioServiceImpl implements DicionarioService {
 	public Dicionario findByName(String nome) throws Exception {
 		
 		Dicionario dionario = dicionarioRepository.findByNome(nome)
-		.orElseThrow(() -> new Exception("Nome do dicionário não encontrado"));
+		.orElseThrow(() -> new ResourceNotFoundException("Dicionario com " + nome + " não foi encontrado"));
 		
 		//dionario.setPalavras(null);
 		

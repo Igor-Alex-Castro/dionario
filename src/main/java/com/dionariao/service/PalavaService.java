@@ -14,7 +14,7 @@ public interface PalavaService {
 	
 	Palavra findByIdAndDicionarioId(Long idPalavra, Long idDicionario);
 
-	void deleteById(Long idPalavra);
+	Palavra deleteById(Long idPalavra);
 
 	
 }

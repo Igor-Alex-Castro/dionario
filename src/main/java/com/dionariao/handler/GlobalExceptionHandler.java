@@ -15,6 +15,7 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.dionariao.exception.BusinessException;
 import com.dionariao.exception.ResourceNotFoundException;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -96,6 +97,21 @@ public class GlobalExceptionHandler {
 				 
 	 }
 	 
+	// 409 Conflict - Violação de regra de negócio
+		 @ExceptionHandler(BusinessException.class)
+		 public ResponseEntity<Map<String, Object>>  handleBusinessException(BusinessException ex,  HttpServletRequest request){
+			 return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of(
+					 
+					 "timestamp", LocalDateTime.now(),
+						"status", HttpStatus.CONFLICT,
+						"error", "Violação de regra de negócio",
+						"message", ex.getMessage(),
+						"path", request.getRequestURI()
+					 )
+					 );
+					 
+		 }
+	 
 	 @ExceptionHandler(AuthenticationException.class)
 	    public ResponseEntity<Map<String, Object>> handleAuthenticationException(AuthenticationException ex, HttpServletRequest request) {
 	        return 
@@ -137,7 +153,7 @@ public class GlobalExceptionHandler {
       	);
 	    }
 	    
-			/*Metodo para ser utilizado para construir o json da padronização
+		/*Metodo para ser utilizado para construir o json da padronização
 		 * private ResponseEntity<Map<String, Object>> buildResponse(HttpStatus status,
 		 * String error, String message) { return
 		 * ResponseEntity.status(status).body(Map.of( "timestamp", LocalDateTime.now(),

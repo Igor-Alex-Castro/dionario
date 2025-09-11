@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.dionariao.dto.IdNomeDioDto;
 import com.dionariao.dto.SaveDicionarioDto;
+import com.dionariao.exception.BusinessException;
 import com.dionariao.exception.DicionarioNaoEncontradoException;
 import com.dionariao.exception.ResourceNotFoundException;
 import com.dionariao.model.Dicionario;
@@ -75,7 +76,7 @@ public class DicionarioServiceImpl implements DicionarioService {
 		
 		
 		 if(palavraRepository.existsByDicionarioId(idDicionario) ) {
-			 throw new DataIntegrityViolationException("Não é possível excluir este dicionário, pois ele possui palavras associadas"); 
+			 throw new BusinessException("Não é possível excluir este dicionário, pois ele possui palavras associadas"); 
 		 }
 		 
 		dicionarioRepository.deleteById(idDicionario);

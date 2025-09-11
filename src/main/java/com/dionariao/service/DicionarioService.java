@@ -2,7 +2,7 @@ package com.dionariao.service;
 
 
 import java.util.List;
-import java.util.Optional;
+
 
 import com.dionariao.dto.IdNomeDioDto;
 import com.dionariao.dto.SaveDicionarioDto;
@@ -16,7 +16,7 @@ public interface DicionarioService {
 	
 	Dicionario findByName( String nome) throws Exception;
 
-	Optional<Dicionario> deleteById(Long idDicionario);
+	Dicionario deleteById(Long idDicionario);
 
 
 	List<IdNomeDioDto> listaTodosDicionario();

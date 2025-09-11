@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.dionariao.dto.IdNomeDioDto;
@@ -67,10 +68,16 @@ public class DicionarioServiceImpl implements DicionarioService {
 	}
 
 	@Override
-	public Optional<Dicionario> deleteById(Long idDicionario) {
+	public Dicionario deleteById(Long idDicionario) {
 		// TODO Auto-generated method stub
-		Optional<Dicionario> dicionario = dicionarioRepository.findById(idDicionario);
+		Dicionario dicionario = dicionarioRepository.findById(idDicionario)
+				.orElseThrow(() -> new ResourceNotFoundException("Dicionario com o id " + idDicionario + " não foi encontrado"));
 		
+		
+		 if(palavraRepository.existsByDicionarioId(idDicionario) ) {
+			 throw new DataIntegrityViolationException("Não é possível excluir este dicionário, pois ele possui palavras associadas"); 
+		 }
+		 
 		dicionarioRepository.deleteById(idDicionario);
 		
 		return dicionario;

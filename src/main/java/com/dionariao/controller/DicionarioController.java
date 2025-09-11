@@ -69,7 +69,7 @@ public class DicionarioController {
 	@DeleteMapping()
 	public ResponseEntity<String> deleteById(@RequestParam Long idDicionario) throws Exception{
 		
-		Optional<Dicionario> dicionario =  dicionarioService.deleteById(idDicionario);
-		return ResponseEntity.ok("Dicionario " +  dicionario.get().getNome() + "  excluido com sucesso");
+		Dicionario dicionario =  dicionarioService.deleteById(idDicionario);
+		return ResponseEntity.ok("Dicionario " +  dicionario.getNome() + "  excluido com sucesso");
 	}
 }

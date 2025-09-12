@@ -12,7 +12,9 @@ public interface DicionarioService {
 	
 	
 
-	Dicionario saveNomeDicionario(SaveDicionarioDto saveDicionarioDto);
+	Dicionario create(SaveDicionarioDto saveDicionarioDto);
+	
+	Dicionario update(SaveDicionarioDto saveDicionarioDto);
 	
 	Dicionario findByName( String nome) throws Exception;
 

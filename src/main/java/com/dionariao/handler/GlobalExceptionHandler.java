@@ -64,7 +64,7 @@ public class GlobalExceptionHandler {
 					"timestamp", LocalDateTime.now(),
 					"status", HttpStatus.BAD_REQUEST,
 					"error", errors,
-					"message", "DTO inválido" + ex.getMessage(),
+					"message", "DTO inválido: " + ex.getMessage(),
 					"path", request.getRequestURI()
 					));
 	 }

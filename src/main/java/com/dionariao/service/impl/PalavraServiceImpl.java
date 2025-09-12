@@ -79,15 +79,26 @@ public class PalavraServiceImpl implements PalavaService {
 		
 		
 		Palavra palavra = null;
-		try {
-			palavra = palavraRepository.findByIdAndDicionarioId(idPalavra, idDicionario)
-				 .orElseThrow(() -> new Exception("Palavra não encontrada"));
+		
+		if(idPalavra == null) {
+			throw new  BusinessException("Não foi possível encontrar a palavra, pois o ID da palavra não foi informado.");
+		}
+		
+		if(idDicionario == null) {
+			throw new  BusinessException("Não foi possível encontrar a palavra, pois o ID do dicionário não foi informado.");
+		}
+		
+		if(!dicionarioRepository.existsById(idDicionario)) {
+			throw new  BusinessException("Não foi possível encontrar a palavra, pois o dicionário informado não existe");
+		}
+		
+		
+		
+		palavra = palavraRepository.findByIdAndDicionarioId(idPalavra, idDicionario).orElseThrow(
+				() ->  new BusinessException("Não foi possível encontrar a palavra, pois a palavra informada não existe para este dicionário") );
+				 
 		
 			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
 		return palavra;
 		

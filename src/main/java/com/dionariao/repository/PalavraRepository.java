@@ -19,6 +19,10 @@ public interface PalavraRepository extends JpaRepository<Palavra, Long>{
 	Optional<Palavra> findByOrigemId(Long idOrigem);
 	
 	boolean existsByDicionarioId(Long dicionariId);
-	
+
+	boolean existsByIdAndDicionarioId(Long idPalavra, Long idDicionario);
+
 	boolean existsByDicionarioIdAndNome(Long idDicionario, String nomePalavra);
+	
+	
 }

@@ -80,7 +80,7 @@ public class DicionarioServiceImpl implements DicionarioService {
 	public Dicionario findByName(String nome) throws Exception {
 		
 		Dicionario dionario = dicionarioRepository.findByNome(nome)
-		.orElseThrow(() -> new ResourceNotFoundException("Dicionario com " + nome + " não foi encontrado"));
+		.orElseThrow(() -> new ResourceNotFoundException("Dicionario com o nome " + nome + " não foi encontrado"));
 		
 		//dionario.setPalavras(null);
 		

@@ -43,7 +43,7 @@ public class PalavraController {
 	
 	
 	@GetMapping()
-	public ResponseEntity<Palavra> findByIdAndDicionarioId(@RequestParam Long idPalavra, @RequestParam Long idDicionario){
+	public ResponseEntity<Palavra> findByIdAndDicionarioId(@RequestParam(required = false) Long idPalavra, @RequestParam(required = false) Long idDicionario){
 		
 			Palavra palavra = null;
 	

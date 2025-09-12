@@ -9,7 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,11 +43,18 @@ public class DicionarioController {
 	@PostMapping
 	public ResponseEntity<String> create(@RequestBody @Valid SaveDicionarioDto saveDicionarioDto){
 		
-		 Dicionario dicionarioCriado = dicionarioService.saveNomeDicionario(saveDicionarioDto);
+		 Dicionario dicionarioCriado = dicionarioService.create(saveDicionarioDto);
 
 		return ResponseEntity.ok( dicionarioCriado.getNome());
 	}
 	
+	@PutMapping
+	public ResponseEntity<String> update(@RequestBody @Valid SaveDicionarioDto saveDicionarioDto){
+		
+		 Dicionario dicionarioCriado = dicionarioService.update(saveDicionarioDto);
+
+		return ResponseEntity.ok( dicionarioCriado.getNome());
+	}
 
 	
 	@GetMapping("/lista")
@@ -57,8 +66,8 @@ public class DicionarioController {
 		 return ResponseEntity.ok( listIdNomeDioDto);
 	}
 	
-	@GetMapping
-	public ResponseEntity<Dicionario> findByName(@RequestParam @NotBlank(message = "O parâmetro 'nome' não pode ser vazio") String nome) throws Exception{
+	@GetMapping("/{nome}")
+	public ResponseEntity<Dicionario> findByName(@PathVariable @NotBlank(message = "O parâmetro 'nome' não pode ser vazio") String nome) throws Exception{
 		
 		Dicionario dicionario = dicionarioService.findByName(nome);
 		return ResponseEntity.ok( dicionario);
@@ -66,10 +75,10 @@ public class DicionarioController {
 	
 	
 	
-	@DeleteMapping()
-	public ResponseEntity<String> deleteById(@RequestParam Long idDicionario) throws Exception{
+	@DeleteMapping("/{id}")
+	public ResponseEntity<String> deleteById(@PathVariable Long id) throws Exception{
 		
-		Dicionario dicionario =  dicionarioService.deleteById(idDicionario);
+		Dicionario dicionario =  dicionarioService.deleteById(id);
 		return ResponseEntity.ok("Dicionario " +  dicionario.getNome() + "  excluido com sucesso");
 	}
 }

@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.dionariao.dto.AddPalavraDto;
+import com.dionariao.exception.BusinessException;
 import com.dionariao.model.Dicionario;
 import com.dionariao.model.Palavra;
 import com.dionariao.repository.DicionarioRepository;
@@ -18,10 +19,12 @@ import jakarta.transaction.Transactional;
 public class PalavraServiceImpl implements PalavaService {
 
 	private final PalavraRepository palavraRepository;
+	private final DicionarioRepository dicionarioRepository;
 	
 	public PalavraServiceImpl(PalavraRepository palavraRepository, DicionarioRepository dicionarioRepository) {
 		
 		this.palavraRepository = palavraRepository;
+		this.dicionarioRepository = dicionarioRepository;
 		
 	}
 
@@ -29,20 +32,35 @@ public class PalavraServiceImpl implements PalavaService {
 	@Override
 	public Palavra addPalavra(AddPalavraDto addPalavraDto)  {
 		
-		
+		Long idDicionario = addPalavraDto.idDicionario();
 	
+		String nomePalavra = addPalavraDto.palavara();
+		
 		Palavra palavra = new Palavra();
 		Dicionario dicionario = new Dicionario();
 		
-		dicionario.setId(addPalavraDto.idDicionario());
+		if(idDicionario == null) {
+			throw new  BusinessException("Palavra não foi salva, pois o id do dicionário não foi informado.");
+		}
+		
+		if(!dicionarioRepository.existsById(idDicionario)) {
+			throw new  BusinessException("Palavra não foi salva, pois este dicionário não existe.");
+		}
+		
+		if(nomePalavra == null || nomePalavra.isEmpty()) {
+			throw new  BusinessException("Palavra não foi salva, pois é necessário informar uma.");
+		}
+		
+		if(palavraRepository.existsByDicionarioIdAndNome(idDicionario, nomePalavra)) {
+			throw new  BusinessException("Palavra não foi salva, pois ela ja existe para este dicionário.");
+		}
+		
+		dicionario.setId(idDicionario);
 		
 		palavra.setDicionario(dicionario);
 		
-		palavra.setNome(addPalavraDto.palavara());
+		palavra.setNome(nomePalavra);
 		
-		if(addPalavraDto.idPalavra() != null) {
-			palavra.setId(addPalavraDto.idPalavra());
-		}
 		palavraRepository.save(palavra);
 		
 		return palavra;

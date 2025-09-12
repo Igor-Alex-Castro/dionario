@@ -37,42 +37,23 @@ public class DicionarioServiceImpl implements DicionarioService {
 	}
 
 	@Override
-	public Dicionario create(SaveDicionarioDto saveDicionarioDto) {
+	public Dicionario saveNomeDicionario(SaveDicionarioDto saveDicionarioDto) {
 		// TODO Auto-generated method stub
-		String nome = saveDicionarioDto.name();
-		
-		if(dicionarioRepository.existsByNome(nome)) {
-			throw new  BusinessException("O dicionário com o " +  nome + " já existe" );
-		}
-		
 		Dicionario dicionario = new Dicionario();
+		dicionario.setNome(saveDicionarioDto.name());
 		
-		dicionario.setNome(nome);
-
-		return  dicionarioRepository.save(dicionario);
-	}
+		if(saveDicionarioDto.id() != null) {
 	
-	@Override
-	public Dicionario update(SaveDicionarioDto saveDicionarioDto) {
-		// TODO Auto-generated method stub
-		String nome = saveDicionarioDto.name();
-		
-		if(saveDicionarioDto.id() == null) {
-			throw new  BusinessException("É necessário informar o id");
+			dicionario.setId(saveDicionarioDto.id());
+			
+			List<Palavra> palavras = palavraRepository.findByDicionarioId(saveDicionarioDto.id());
+				
+			if(!palavras.isEmpty()) {
+				dicionario.setPalavras(palavras);
+			}
 		}
 		
-		if(!dicionarioRepository.existsById(saveDicionarioDto.id())) {
-			throw new  BusinessException("Não foi possivel atualizar pois o dicionario não existe");
-		}
 		
-		if(dicionarioRepository.existsByNome(nome)) {
-			throw new  BusinessException("Não foi possivel atualizar pois existe um dicionario com esse nome");
-		}
-		
-		Dicionario dicionario = new Dicionario();
-		
-		dicionario.setNome(nome);
-
 		return  dicionarioRepository.save(dicionario);
 	}
 

@@ -16,5 +16,4 @@ public interface DicionarioRepository  extends JpaRepository<Dicionario, Long> {
 	 
 	Optional<Dicionario> findByNomeIgnoreCase(String nomeDicionario);
 	
-	boolean existsByNome(String nome);
 }

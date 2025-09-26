@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dionariao.dto.AddOrigemDto;
-import com.dionariao.dto.AddPalavraDto;
+import com.dionariao.dto.PalavraDto;
 import com.dionariao.model.Origem;
 import com.dionariao.model.Palavra;
 import com.dionariao.model.Significado;

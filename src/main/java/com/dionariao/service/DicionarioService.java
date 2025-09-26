@@ -2,26 +2,27 @@ package com.dionariao.service;
 
 
 import java.util.List;
+import java.util.Optional;
 
-
-import com.dionariao.dto.IdNomeDioDto;
-import com.dionariao.dto.SaveDicionarioDto;
+import com.dionariao.dto.DicionarioDto;
 import com.dionariao.model.Dicionario;
 
 public interface DicionarioService {
 	
 	
 
-	Dicionario create(SaveDicionarioDto saveDicionarioDto);
+	Dicionario create(DicionarioDto DicionarioDto);
 	
-	Dicionario update(SaveDicionarioDto saveDicionarioDto);
+	Dicionario update(Long id, DicionarioDto DicionarioDto);
 	
-	Dicionario findByName( String nome) throws Exception;
+	Dicionario findById( Long id) throws Exception;
 
-	Dicionario deleteById(Long idDicionario);
+	Dicionario deleteById(Long id);
 
 
-	List<IdNomeDioDto> listaTodosDicionario();
+	List<Dicionario> listaTodosDicionario();
+
+	List<Dicionario> findByNomeContainingIgnoreCase(String nome);
 
 
 }

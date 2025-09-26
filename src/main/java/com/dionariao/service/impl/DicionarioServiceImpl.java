@@ -2,20 +2,16 @@ package com.dionariao.service.impl;
 
 
 
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import com.dionariao.dto.IdNomeDioDto;
-import com.dionariao.dto.SaveDicionarioDto;
+import com.dionariao.dto.DicionarioDto;
 import com.dionariao.exception.BusinessException;
-import com.dionariao.exception.DicionarioNaoEncontradoException;
 import com.dionariao.exception.ResourceNotFoundException;
 import com.dionariao.model.Dicionario;
-import com.dionariao.model.Palavra;
 import com.dionariao.repository.DicionarioRepository;
 import com.dionariao.repository.PalavraRepository;
 import com.dionariao.service.DicionarioService;
@@ -37,9 +33,9 @@ public class DicionarioServiceImpl implements DicionarioService {
 	}
 
 	@Override
-	public Dicionario create(SaveDicionarioDto saveDicionarioDto) {
+	public Dicionario create(DicionarioDto DicionarioDto) {
 		// TODO Auto-generated method stub
-		String nome = saveDicionarioDto.name();
+		String nome = DicionarioDto.name();
 		
 		if(dicionarioRepository.existsByNome(nome)) {
 			throw new  BusinessException("O dicionário com o " +  nome + " já existe" );
@@ -53,15 +49,15 @@ public class DicionarioServiceImpl implements DicionarioService {
 	}
 	
 	@Override
-	public Dicionario update(SaveDicionarioDto saveDicionarioDto) {
+	public Dicionario update(Long id, DicionarioDto DicionarioDto) {
 		// TODO Auto-generated method stub
-		String nome = saveDicionarioDto.name();
+		String nome = DicionarioDto.name();
 		
-		if(saveDicionarioDto.id() == null) {
+		if(id == null) {
 			throw new  BusinessException("É necessário informar o id");
 		}
 		
-		if(!dicionarioRepository.existsById(saveDicionarioDto.id())) {
+		if(!dicionarioRepository.existsById(id)) {
 			throw new  BusinessException("Não foi possivel atualizar pois o dicionario não existe");
 		}
 		
@@ -71,16 +67,17 @@ public class DicionarioServiceImpl implements DicionarioService {
 		
 		Dicionario dicionario = new Dicionario();
 		
+		dicionario.setId(id);
 		dicionario.setNome(nome);
 
 		return  dicionarioRepository.save(dicionario);
 	}
 
 	@Override
-	public Dicionario findByName(String nome) throws Exception {
+	public Dicionario findById(Long id) throws Exception {
 		
-		Dicionario dionario = dicionarioRepository.findByNome(nome)
-		.orElseThrow(() -> new ResourceNotFoundException("Dicionario com o nome " + nome + " não foi encontrado"));
+		Dicionario dionario = dicionarioRepository.findById(id)
+		.orElseThrow(() -> new ResourceNotFoundException("Dicionario com o ID " + id + " não foi encontrado"));
 		
 		//dionario.setPalavras(null);
 		
@@ -88,32 +85,42 @@ public class DicionarioServiceImpl implements DicionarioService {
 	}
 
 	@Override
-	public Dicionario deleteById(Long idDicionario) {
+	public Dicionario deleteById(Long id) {
 		// TODO Auto-generated method stub
-		Dicionario dicionario = dicionarioRepository.findById(idDicionario)
-				.orElseThrow(() -> new ResourceNotFoundException("Dicionario com o id " + idDicionario + " não foi encontrado"));
+		Dicionario dicionario = dicionarioRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Dicionario com o id " + id + " não foi encontrado"));
 		
 		
-		 if(palavraRepository.existsByDicionarioId(idDicionario) ) {
+		 if(palavraRepository.existsByDicionarioId(id) ) {
 			 throw new BusinessException("Não é possível excluir este dicionário, pois ele possui palavras associadas"); 
 		 }
 		 
-		dicionarioRepository.deleteById(idDicionario);
+		dicionarioRepository.deleteById(id);
 		
 		return dicionario;
 		 
 	}
 
-	public List<IdNomeDioDto> listaTodosDicionario() {
-		List<IdNomeDioDto> listIdNomeDioDto = new ArrayList<IdNomeDioDto>();
+	public List<Dicionario> listaTodosDicionario() {
 		
-		List<Dicionario> dicionarios = dicionarioRepository.findAll();
 		
-		for (Dicionario dicionario : dicionarios) {
-			listIdNomeDioDto.add(new IdNomeDioDto(dicionario.getId(), dicionario.getNome()));
+		List<Dicionario> dicionarios = dicionarioRepository.findAll() ;
+	
+		return dicionarios;
+	}
+
+	@Override
+	public List<Dicionario> findByNomeContainingIgnoreCase(String nome) {
+		String likeNome = "";
+		
+		if(nome != null || !nome.isEmpty() ) {
+			likeNome = "%" + nome + "%";
 		}
+		// TODO Auto-generated method stub
+		List<Dicionario> dicionarios = dicionarioRepository.findByNomeContainingIgnoreCase(nome);
+				
 		
-		return listIdNomeDioDto;
+		return dicionarios;
 	}
 
 	

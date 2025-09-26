@@ -39,10 +39,10 @@ public class SecurityConfiguration {
             "/swagger-resources/**",
             "/webjars/**",
         	"/users/test",
-			"/dio/**",
+			"/dicionarios/**",
 			"/frase/**",
 			"/origem/**",
-			"/palavra/**",
+			"/palavras/**",
 			"/significado/**"
 	};
 	

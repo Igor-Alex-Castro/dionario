@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.dionariao.dto.AddPalavraDto;
+import com.dionariao.dto.PalavraDto;
 import com.dionariao.exception.BusinessException;
 import com.dionariao.model.Dicionario;
 import com.dionariao.model.Palavra;
@@ -30,36 +30,36 @@ public class PalavraServiceImpl implements PalavaService {
 
 
 	@Override
-	public Palavra addPalavra(AddPalavraDto addPalavraDto)  {
-		
-		Long idDicionario = addPalavraDto.idDicionario();
-	
-		String nomePalavra = addPalavraDto.palavara();
+	public Palavra create(PalavraDto palavraDto)  {  
 		
 		Palavra palavra = new Palavra();
 		Dicionario dicionario = new Dicionario();
 		
-		if(idDicionario == null) {
-			throw new  BusinessException("Palavra não foi salva, pois o id do dicionário não foi informado.");
-		}
+		verifySavOrUpdate(null,  palavraDto);
 		
-		if(!dicionarioRepository.existsById(idDicionario)) {
-			throw new  BusinessException("Palavra não foi salva, pois este dicionário não existe.");
-		}
 		
-		if(nomePalavra == null || nomePalavra.isEmpty()) {
-			throw new  BusinessException("Palavra não foi salva, pois é necessário informar uma.");
-		}
-		
-		if(palavraRepository.existsByDicionarioIdAndNome(idDicionario, nomePalavra)) {
-			throw new  BusinessException("Palavra não foi salva, pois ela ja existe para este dicionário.");
-		}
-		
-		dicionario.setId(idDicionario);
-		
+		dicionario.setId(palavraDto.idDicionario());
 		palavra.setDicionario(dicionario);
+		palavra.setNome(palavraDto.palavra());
 		
-		palavra.setNome(nomePalavra);
+		palavraRepository.save(palavra);
+		
+		return palavra;
+	}
+
+	@Override
+	public Palavra update(Long id, PalavraDto palavraDto)  {
+		
+	
+		
+		Palavra palavra = new Palavra();
+		Dicionario dicionario = new Dicionario();
+		
+		verifySavOrUpdate(id,  palavraDto);
+		
+		dicionario.setId(palavraDto.idDicionario());
+		palavra.setDicionario(dicionario);
+		palavra.setNome(palavraDto.palavra());
 		
 		palavraRepository.save(palavra);
 		
@@ -85,11 +85,11 @@ public class PalavraServiceImpl implements PalavaService {
 		}
 		
 		if(idDicionario == null) {
-			throw new  BusinessException("Não foi possível encontrar a palavra, pois o ID do dicionário não foi informado.");
+			throw new  BusinessException("Não foi possível encontrar a palavra, pois o ID do dicionário não foi informado");
 		}
 		
 		if(!dicionarioRepository.existsById(idDicionario)) {
-			throw new  BusinessException("Não foi possível encontrar a palavra, pois o dicionário informado não existe");
+			throw new  BusinessException("Não foi possível encontrar a palavra, pois o dicionário informado não existe.");
 		}
 		
 		
@@ -120,6 +120,32 @@ public class PalavraServiceImpl implements PalavaService {
 		palavraRepository.deleteById(idPalavra);
 		
 		return palavra;
+	}
+	
+	
+	public void verifySavOrUpdate(Long id, PalavraDto palavraDto) {
+		
+		Long idDicionario = palavraDto.idDicionario();
+		
+		String nomePalavra = palavraDto.palavra();
+		
+		if(idDicionario == null) {
+			throw new  BusinessException("Palavra não foi atualizada, pois o id do dicionário não foi informado.");
+		}
+		
+		if(!dicionarioRepository.existsById(idDicionario)) {
+			throw new  BusinessException("Palavra não foi atualizada, pois este dicionário não existe.");
+		}
+		
+		if(nomePalavra == null || nomePalavra.isEmpty()) {
+			throw new  BusinessException("Palavra não foi atualizada, pois é necessário informar uma.");
+		}
+		
+		if(palavraRepository.existsByDicionarioIdAndNome(idDicionario, nomePalavra)) {
+			throw new  BusinessException("Palavra não foi atualizada, pois ela ja existe para este dicionário.");
+		}
+		
+
 	}
 
 }

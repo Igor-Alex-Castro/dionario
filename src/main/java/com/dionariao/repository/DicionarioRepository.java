@@ -1,6 +1,7 @@
 package com.dionariao.repository;
 
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,7 +15,9 @@ public interface DicionarioRepository  extends JpaRepository<Dicionario, Long> {
 	
 	Optional<Dicionario> findByNome(String nomeDicionario);
 	 
-	Optional<Dicionario> findByNomeIgnoreCase(String nomeDicionario);
+	
 	
 	boolean existsByNome(String nome);
+
+	List<Dicionario> findByNomeContainingIgnoreCase(String nome);
 }
